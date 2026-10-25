@@ -59,6 +59,20 @@ autographql/
 └── website/
 ```
 
+## The interactive UI
+
+`website/` is a FastAPI backend and a Next.js frontend serving two views:
+
+- **Dataset Generator** — pick or upload `.graphql` schemas, choose categories,
+  queries per category and max hops, then generate. Each query is validated
+  against the schema and by executing it, and deduplicated by canonical hash.
+- **Dataset Explorer** — browse what came out by split, schema and category, and
+  inspect the natural-language utterance, the query, its variables and the
+  schema side by side.
+
+This is where validation happens: it is part of this framework rather than a
+separate component.
+
 ## Running Locally
 
 ### Backend
