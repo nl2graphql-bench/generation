@@ -79,11 +79,12 @@ separate component.
 ## Install
 
 ```bash
-pip install -e .
+pip install autographql
 ```
 
-Add extras as needed: `.[datasets]` to write xlsx, `.[web]` for the UI,
-`.[dev]` for the build and test tools.
+Add extras as needed: `autographql[datasets]` to write xlsx, `autographql[web]`
+for the UI. To work on the code instead, clone the repo and `pip install -e
+".[dev]"`.
 
 ## Use as a library
 
@@ -153,11 +154,11 @@ MIT License
 
 ## Publishing
 
-```bash
-pip install build twine
-python -m build
-twine check dist/*
-twine upload dist/*
-```
+Releases publish themselves. `.github/workflows/publish.yml` uploads to PyPI
+with Trusted Publishing (OIDC), so no API token is stored anywhere:
 
-Version lives in `pyproject.toml` and `src/autographql/__init__.py`; bump both.
+1. tag the commit, `git tag -s vX.Y.Z && git push origin vX.Y.Z`
+2. create a GitHub release from that tag
+
+The version comes from the tag via hatch-vcs, so there is no version to bump by
+hand and a release cannot publish a number that disagrees with its tag.
