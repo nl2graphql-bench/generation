@@ -1,5 +1,4 @@
 import os
-import sys
 import shutil
 import tempfile
 import json
@@ -9,11 +8,12 @@ from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
+# Repo root, used to locate the bundled schemas/ and datasets/ directories.
+# The package itself is imported normally: install it with `pip install -e .`.
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-sys.path.insert(0, root_dir)
 
-from src.query_generator_app import GraphQLQueryGeneratorApp
-from src.utils.schema_utils import load_schema_from_file
+from autographql import GraphQLQueryGeneratorApp
+from autographql.utils.schema_utils import load_schema_from_file
 
 app = FastAPI(title="AutoGraphQL API")
 

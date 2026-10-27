@@ -48,15 +48,18 @@ The framework consists of the following main stages:
 
 ```
 autographql/
-├── src/                    # Core GraphQL parsing and query generation
+├── pyproject.toml          # packaging: deps, extras, console script
+├── src/autographql/        # the package
+│   ├── query_generator_app.py   # GraphQLQueryGeneratorApp, the entry API
+│   ├── cli.py                   # autographql-generate
+│   ├── generators/              # one generator per query category
+│   └── utils/                   # schema introspection, variable generation
 ├── schemas/                # GraphQL schemas used for generation
-├── scripts/                # Command-line generation scripts
-├── datasets/               # Train and test datasets
 ├── docs/
 │   ├── autographql.pdf     # Paper
 │   └── figures/
 │       └── toolkit.png     # Framework overview
-└── website/
+└── website/                # Dataset Generator and Dataset Explorer UI
 ```
 
 ## The interactive UI
@@ -73,14 +76,40 @@ autographql/
 This is where validation happens: it is part of this framework rather than a
 separate component.
 
-## Running Locally
+## Install
+
+```bash
+pip install -e .
+```
+
+Add extras as needed: `.[datasets]` to write xlsx, `.[web]` for the UI,
+`.[dev]` for the build and test tools.
+
+## Use as a library
+
+```python
+from autographql import GraphQLQueryGeneratorApp
+```
+
+## Generate from the command line
+
+```bash
+autographql-generate --schema schemas/academic/index.graphql \
+                     --category aliases --count 10 --max-hops 2
+```
+
+`--category` takes any of aliases, directives, external_fragments,
+inline_fragments, filters, pagination, mutations, or `all`. Output is written to
+`generated_queries/<schema>/`.
+
+## Running the UI locally
 
 ### Backend
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip install -e ".[web,datasets]"
 uvicorn website.backend.main:app --reload --port 8000
 ```
 
@@ -98,7 +127,7 @@ Open `http://localhost:3000`.
 
 ```bash
 source venv/bin/activate
-python scripts/generate_queries.py --schema academic --category all --count 5
+autographql-generate --schema schemas/academic/index.graphql --category all --count 5
 ```
 
 ## Datasets

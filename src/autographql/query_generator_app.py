@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import os
 from typing import List, Optional
-from src.utils.schema_utils import load_schema_from_file, build_schema_with_directives
-from src.utils.variable_utils import save_query_results, validate_query_uniqueness
-from src.generators.generator_factory import QueryGeneratorFactory
+from .utils.schema_utils import load_schema_from_file, build_schema_with_directives
+from .utils.variable_utils import save_query_results, validate_query_uniqueness
+from .generators.generator_factory import QueryGeneratorFactory
 
 class GraphQLQueryGeneratorApp:
     def __init__(self):
