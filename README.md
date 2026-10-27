@@ -150,3 +150,14 @@ Please cite the repo if you think our work is helpful to you.
 ## License
 
 MIT License
+
+## Publishing
+
+```bash
+pip install build twine
+python -m build
+twine check dist/*
+twine upload dist/*
+```
+
+Version lives in `pyproject.toml` and `src/autographql/__init__.py`; bump both.
