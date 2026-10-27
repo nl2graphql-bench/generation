@@ -21,3 +21,11 @@ venv/
 
 # CLI output: autographql-generate writes here by default.
 generated_queries/
+
+# Generated at build time by hatch-vcs from the git tag.
+src/autographql/_version.py
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
